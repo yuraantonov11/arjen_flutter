@@ -29,19 +29,20 @@ class _SongsTabState extends State<SongsTab> {
 
   List<MaterialColor> colors;
   List<String> songNames;
-  Future<String> arjenProducts;
+  String arjenProducts;
 
   @override
   void initState() {
     super.initState();
     _setData();
-    arjenProducts = fetchArjenPrices();
   }
 
   _setData() {
-//    arjenProducts = await fetchArjenPrices();
     colors = getRandomColors(_itemsLength);
     songNames = getRandomNames(_itemsLength);
+    setState(() async {
+      arjenProducts = await fetchArjenPrices();
+    });
   }
 
   Future<void> _refreshData() {
@@ -54,6 +55,7 @@ class _SongsTabState extends State<SongsTab> {
 
   Widget _listBuilder(BuildContext context, int index) {
     if (index >= _itemsLength) return null;
+    print(arjenProducts);
 
     // Show a slightly different color palette. Show poppy-ier colors on iOS
     // due to lighter contrasting bars and tone it down on Android.
@@ -67,7 +69,8 @@ class _SongsTabState extends State<SongsTab> {
       child: Hero(
         tag: index,
         child: HeroAnimatingSongCard(
-          song: songNames[index],
+//          song: songNames[index],
+          song: 'ABC',
           color: color,
           heroAnimation: AlwaysStoppedAnimation(0),
           onPressed: () => Navigator.of(context).push<void>(
