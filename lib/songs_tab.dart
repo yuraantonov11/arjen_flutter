@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
@@ -29,7 +31,7 @@ class _SongsTabState extends State<SongsTab> {
 
   List<MaterialColor> colors;
   List<String> songNames;
-  String arjenProducts;
+  List<Product> arjenProducts = [];
 
   @override
   void initState() {
@@ -40,8 +42,15 @@ class _SongsTabState extends State<SongsTab> {
   _setData() {
     colors = getRandomColors(_itemsLength);
     songNames = getRandomNames(_itemsLength);
-    setState(() async {
-      arjenProducts = await fetchArjenPrices();
+    fetchArjenPrices().then((productsString) => {
+      setState(() {
+        var jsonData = json.decode(productsString);
+        Iterable l = jsonData['yml_catalog']['shop']['offers'];
+        List<Product> products = l.map((model)=> Product.fromJson(model)).toList();
+        print('yml_catalog');
+//        print(products['yml_catalog']);
+        print(products);
+      })
     });
   }
 
@@ -54,7 +63,7 @@ class _SongsTabState extends State<SongsTab> {
   }
 
   Widget _listBuilder(BuildContext context, int index) {
-    if (index >= _itemsLength) return null;
+    if (index >= arjenProducts.length) return null;
     print(arjenProducts);
 
     // Show a slightly different color palette. Show poppy-ier colors on iOS
@@ -118,7 +127,7 @@ class _SongsTabState extends State<SongsTab> {
   Widget _buildAndroid(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(SongsTab.title),
+        title: Text(arjenProducts.length.toString()),
         actions: [
           IconButton(
             icon: Icon(Icons.refresh),

@@ -1,8 +1,8 @@
 import 'dart:math';
 
-import 'package:arjen_flutter/Product.dart';
+//import 'package:arjen_flutter/Product.dart';
 import 'package:xml/xml.dart' as xml;
-import 'package:http/http.dart' as http;
+//import 'package:http/http.dart' as http;
 
 
 import 'package:english_words/english_words.dart';

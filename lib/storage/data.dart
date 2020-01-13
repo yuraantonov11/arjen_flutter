@@ -3,7 +3,7 @@ import 'package:http/http.dart' as http;
 import 'package:xml2json/xml2json.dart';
 import 'package:path_provider/path_provider.dart';
 
-import '../Product.dart';
+//import '../Product.dart';
 
 
 Future<String> get _localPath async {
